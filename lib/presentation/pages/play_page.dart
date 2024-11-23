@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:reversi_lab/presentation/res/values/app_colors.dart';
-import 'package:reversi_lab/presentation/widget/board.dart';
+import 'package:reversi_lab/presentation/parts/board.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:reversi_lab/presentation/pages/home_page.dart';
+import 'package:reversi_lab/presentation/pages/play_page.dart';
 
 void main() {
   runApp(
