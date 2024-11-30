@@ -1,4 +1,4 @@
-package com.example.reversi_lab
+package com.pitapaka.ReversiLab
 
 import io.flutter.embedding.android.FlutterActivity
 
