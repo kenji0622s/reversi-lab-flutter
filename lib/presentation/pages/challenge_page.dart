@@ -49,6 +49,8 @@ class ChallengePage extends StatelessWidget {
                             child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
                                 foregroundColor: AppColors.black,
+                                surfaceTintColor: AppColors.white,
+                                elevation: 2,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(8),
                                 ),
@@ -75,6 +77,8 @@ class ChallengePage extends StatelessWidget {
                             child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
                                 foregroundColor: AppColors.black,
+                                surfaceTintColor: AppColors.white,
+                                elevation: 2,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(8),
                                 ),
@@ -127,6 +131,7 @@ class ChallengePage extends StatelessWidget {
                                 .read(brainProvider.notifier)
                                 .selectBrain(value ?? '');
                           },
+                          borderRadius: BorderRadius.circular(8),
                         ),
                       );
                     },
@@ -139,9 +144,10 @@ class ChallengePage extends StatelessWidget {
                         return ElevatedButton(
                           style: ElevatedButton.styleFrom(
                           backgroundColor: AppColors.emerald_500,
-                          foregroundColor: AppColors.white,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
+                            foregroundColor: AppColors.white,
+                            elevation: 2,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
                           ),
                         ),
                         onPressed: () {

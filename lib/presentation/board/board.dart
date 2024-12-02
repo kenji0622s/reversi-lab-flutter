@@ -51,8 +51,14 @@ class Board extends HookConsumerWidget {
         context: context,
         builder: (context) {
           return SimpleDialog(
+            backgroundColor: AppColors.white,
+            surfaceTintColor: AppColors.white,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
             title: Text(message,
-                style: const TextStyle(fontSize: 24),
+                style:
+                    const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center),
             children: [
               Row(
