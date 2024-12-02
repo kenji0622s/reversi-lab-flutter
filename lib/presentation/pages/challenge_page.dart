@@ -8,7 +8,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:reversi_lab/brain/brains.dart';
 import 'package:reversi_lab/providers/brain_turn_provider.dart';
 import 'package:reversi_lab/presentation/widgets/my_app_bar.dart';
-
+import 'package:reversi_lab/providers/is_game_start_probider.dart';
 class ChallengePage extends StatelessWidget {
   ChallengePage({super.key});
 
@@ -134,22 +134,27 @@ class ChallengePage extends StatelessWidget {
                   const SizedBox(height: 24),
                   SizedBox(
                     width: 160,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.emerald_500,
-                        foregroundColor: AppColors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
+                    child: Consumer(
+                      builder: (context, ref, child) {
+                        return ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColors.emerald_500,
+                          foregroundColor: AppColors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
                         ),
-                      ),
-                      onPressed: () {
-                        Navigator.pop(context);
+                        onPressed: () {
+                          ref.read(isGameStartProvider.notifier).gameStart();
+                          Navigator.pop(context);
+                        },
+                        child: const Text(
+                          'ゲーム開始',
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.w600),
+                        ),
+                        );
                       },
-                      child: const Text(
-                        'ゲーム開始',
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.w600),
-                      ),
                     ),
                   ),
                 ],

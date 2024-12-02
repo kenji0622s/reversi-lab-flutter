@@ -5,6 +5,9 @@ import 'package:reversi_lab/presentation/res/values/app_colors.dart';
 import 'package:reversi_lab/presentation/res/values/mode.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:reversi_lab/providers/brain_provider.dart';
+import 'package:reversi_lab/providers/brain_turn_provider.dart';
+import 'package:reversi_lab/providers/is_game_start_probider.dart';
+import 'package:reversi_lab/brain/logic/basic_logics.dart';
 
 class Board extends HookConsumerWidget {
   const Board({super.key, required this.mode});
@@ -13,7 +16,8 @@ class Board extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final brain = ref.watch(brainProvider);
-
+    final brainTurn = ref.watch(brainTurnProvider);
+    final isGameStart = ref.watch(isGameStartProvider);
     final blackCells = useState<List<List<int>>>([
       [4, 4],
       [5, 5]
@@ -90,13 +94,35 @@ class Board extends HookConsumerWidget {
       ];
       whiteAvailableCells.value = [];
       turn.value = 'black';
+      ref.read(isGameStartProvider.notifier).gameStart();
     }
 
     Future<void> gameEnd() async {
+      ref.read(isGameStartProvider.notifier).gameEnd();
       final endMessageResult =
           await showEndMessage(blackCells.value, whiteCells.value);
       if (endMessageResult == 'retry') {
         retry();
+      }
+    }
+
+    void printDuplicateCells(
+        List<List<int>> blackCells, List<List<int>> whiteCells) {
+      // セットを使用して重複を確認
+      final Set<String> blackSet =
+          blackCells.map((cell) => '${cell[0]},${cell[1]}').toSet();
+      final Set<String> whiteSet =
+          whiteCells.map((cell) => '${cell[0]},${cell[1]}').toSet();
+
+      // 重複を見つける
+      final duplicates = blackSet.intersection(whiteSet);
+
+      // 重複したセルを出力
+      if (duplicates.isNotEmpty) {
+        print('重複したセル:');
+        for (var cell in duplicates) {
+          print(cell);
+        }
       }
     }
 
@@ -124,18 +150,39 @@ class Board extends HookConsumerWidget {
       whiteAvailableCells.value = boardValues.whiteAvailableCells;
       turn.value = boardValues.turn;
 
+      printDuplicateCells(blackCells.value, whiteCells.value);
       if (blackAvailableCells.value.isEmpty &&
           whiteAvailableCells.value.isEmpty) {
         gameEnd();
+        return;
       }
 
-      if (mode == Mode.challenge && brain != null && turn.value == 'white') {
+      if (mode == Mode.challenge &&
+          turn.value == 'black' &&
+          brainTurn == 'black') {
         Future.delayed(const Duration(milliseconds: 100), () {
-          final answerCell = boardController.askBrain(whiteAvailableCells.value, brain);
+          final answerCell =
+              boardController.askBrain(blackAvailableCells.value, brain);
+          selectCell(answerCell);
+        });
+      }
+      if (mode == Mode.challenge &&
+          turn.value == 'white' &&
+          brainTurn == 'white') {
+        Future.delayed(const Duration(milliseconds: 100), () {
+          final answerCell =
+              boardController.askBrain(whiteAvailableCells.value, brain);
           selectCell(answerCell);
         });
       }
     }
+
+    useEffect(() {
+      if (isGameStart && brainTurn == 'black') {
+        selectCell(BasicLogics.selectRandom(blackAvailableCells.value));
+      }
+      return null;
+    }, [isGameStart]);
 
     double boardSize = MediaQuery.of(context).size.width - 30;
     double cellSize = boardSize / 8;

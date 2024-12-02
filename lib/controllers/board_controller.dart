@@ -263,6 +263,9 @@ class BoardController {
         whiteCells.removeWhere((whiteCell) =>
             whiteCell[0] == singleDirectionCells[4][0] &&
             whiteCell[1] == singleDirectionCells[4][1]);
+        whiteCells.removeWhere((whiteCell) =>
+            whiteCell[0] == singleDirectionCells[5][0] &&
+            whiteCell[1] == singleDirectionCells[5][1]);
         blackCells.addAll([
           singleDirectionCells[0],
           singleDirectionCells[1],
@@ -362,6 +365,9 @@ class BoardController {
         blackCells.removeWhere((blackCell) =>
             blackCell[0] == singleDirectionCells[3][0] &&
             blackCell[1] == singleDirectionCells[3][1]);
+        blackCells.removeWhere((blackCell) =>
+            blackCell[0] == singleDirectionCells[4][0] &&
+            blackCell[1] == singleDirectionCells[4][1]);
         whiteCells.addAll([
           singleDirectionCells[0],
           singleDirectionCells[1],
@@ -394,6 +400,9 @@ class BoardController {
         blackCells.removeWhere((blackCell) =>
             blackCell[0] == singleDirectionCells[4][0] &&
             blackCell[1] == singleDirectionCells[4][1]);
+        blackCells.removeWhere((blackCell) =>
+            blackCell[0] == singleDirectionCells[5][0] &&
+            blackCell[1] == singleDirectionCells[5][1]);
         whiteCells.addAll([
           singleDirectionCells[0],
           singleDirectionCells[1],
